@@ -2,297 +2,1470 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      type="text/css" />
-   <link rel="stylesheet" type="text/css" href="./style.css" />
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-   <title>SPA semplice</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <title>SPA semplice</title>
 </head>
 
 <body>
-   <div id="container" class="container">
-      <div id="home" class="page">
-          <div class="row">Questo è il contenuto della home page</div>
-          <div class="row"><a href="#puntatori">Puntatori</a></div>
-          <div class="row"><a href="#pagina2">Questo è un link a pagina 2</a></div>
-          <div class="row"><a href="#pagina3">Questo è un link a pagina 3</a></div>                  
-      </div>
-      <div id="puntatori" class="page">
-         <div class="row">
-            <h1 class="eckb-article-title">Puntatori</h1>
-            <strong>Il processo in esecuzione</strong></h2>
+    <div id="container" class="container">
+        <div id="home" class="page">
+            <div class="row">Scegli la lezione di C++:</div>
+            <div class="row"><a href="#puntatori">Puntatori</a></div>
+            <div class="row"><a href="#funzioni">Funzioni</a></div>
+            <div class="row"><a href="#manipolazione_di_stringhe">Manipolazione di stringhe</a></div>
+        </div>
+        <div id="puntatori" class="page">
+            <div class="row">
+                <h1 class="eckb-article-title">Puntatori</h1>
+                <strong>Il processo in esecuzione</strong></h2>
 
-            <p>Come abbiamo gi&agrave; visto, quando viene compilata una applicazione questa viene convertita in un pacchetto che contiene direttamente il codice macchina che pu&ograve; essere direttamente eseguito dalla CPU del computer. Questo prodotto &egrave; l&rsquo;<strong>applicazione eseguibile</strong>.</p>
+                <p>Come abbiamo gi&agrave; visto, quando viene compilata una applicazione questa viene convertita in un
+                    pacchetto che contiene direttamente il codice macchina che pu&ograve; essere direttamente eseguito
+                    dalla CPU del computer. Questo prodotto &egrave; l&rsquo;<strong>applicazione eseguibile</strong>.
+                </p>
 
 
 
-            <p>Quando diamo il comando di esecuzione ad una applicazione eseguibile, il sistema operativo predispone uno spazio di memoria all&rsquo;esecuzione dell&rsquo;applicazione, in cui carica il codice macchina e lo dedica all&rsquo;applicazione.</p>
-            
-            
-            
-            <p>La memoria di una applicazione &egrave; come un grande array, organizzato in celle dove ogni cella occupa un byte di memoria (<sup data-fn="fb42f781-bf89-464a-ac6d-81bcf7f8a012" class="fn"><a href="#fb42f781-bf89-464a-ac6d-81bcf7f8a012" id="fb42f781-bf89-464a-ac6d-81bcf7f8a012-link">1</a></sup>), ed ogni cella &egrave; contraddistinta da un indirizzo.</p>
-            
-            
-            
-            <p>L&rsquo;applicazione in esecuzione insieme alla sua memoria dedicata costituiscono un&nbsp;<strong>processo.</strong></p>
-            
-            
-            
-            <p><strong>Codice e spazio dedicato ai dati sono condivisi nella stessa area di memoria</strong>, come previsto dall&rsquo;<span class="glossaryLink"  aria-describedby="tt"  data-cmtooltip="&lt;div class=glossaryItemTitle&gt;Architettura&lt;/div&gt;&lt;div class=glossaryItemBody&gt;&amp;lt;!-- wp:paragraph --&amp;gt;L&amp;#039;architettura di un sistema informatico indica il modo in cui &egrave; organizzato il software, di quali componenti e moduli &egrave; composto, che ruolo hanno e in che modo comunicano.&amp;lt;br/&amp;gt;&amp;lt;!-- /wp:paragraph --&amp;gt;&lt;/div&gt;"  data-gt-translate-attributes='[{"attribute":"data-cmtooltip", "format":"html"}]'  tabindex='0' role='link'>architettura</span> di Von Neumann. Quando quindi creiamo una variabile l&rsquo;applicazione (tramite il sistema operativo) trova una locazione di memoria grande abbastanza per contenerla (si ricorda che le variabili occupano pi&ugrave; o meno bytes in base al loro tipo) e associa a questo spazio di memoria un <strong>simbolo</strong>, ovvero il nome della variabile. Ad esempio se vogliamo creare una variabile di tipo int in memoria, quando la inizializziamo il sistema operativo alloca da qualche parte in memoria uno spazio di tot bytes per memorizzarne il valore (nei sistemi a 64 bit sono 8 bytes). Viene quindi aggiornata una tabella di simboli che associa ad ogni simbolo la posizione di memoria del dato ad esso associato.</p>
-            
-            
-            
-            <p>La parte della memoria dedicata ai dati memorizzati come variabili viene chiamata &ldquo;<strong>heap</strong>&rdquo;. Nello heap le variabili vengono create assegnando loro un indirizzo che contiene il primo byte della variabile.</p>
-            
-            
-            
-            <p>Esiste poi una porzione speciale della memoria, detta <strong>stack</strong>, che viene utilizzata dai dati usati dalle funzioni, come vedremo pi&ugrave; avanti.</p>
-            
-            
-            
-            <p>Qui lo schema di memoria di un processo.</p>
-            
-            
-            
-            <figure class="wp-block-image" id="block-d515e996fcfe420b8a23449742809312"><img decoding="async" src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-54c12d55-229f-4c83-b4b6-dd7d262e4443-ebe3bf22-848a-4b45-9a54-4c0c2db22a70-untitledpng/public" alt="notion image"/></figure>
-            
-            
-            
-            <h3 class="wp-block-heading" id="block-626df81c1abe4300a11f79379c702c28"><strong>Puntatori e riferimenti in C/C++</strong></h3>
-            
-            
-            
-            <p>Come abbiamo appena visto le variabili occupano uno spazio di memoria, determinato da un indirizzo e in C/C++ le memorizziamo in variabili. Ad esempio l&rsquo;istruzione:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int x = 4;</code></pre></div>
-            
-            
-            
-            <p>memorizza in una struttura dati il valore 4 e l&rsquo;associa al simbolo &ldquo;x&rdquo;, e memorizza nella tabella dei simboli l&rsquo;associazione tra x e l&rsquo;indirizzo dove si trova il valore di x. </p>
-            
-            
-            
-            <p>Quando assegnamo un valore ad x, ad esempio con:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>x = 25</code></pre></div>
-            
-            
-            
-            <p>quello che fa l&rsquo;applicazione &egrave; di andare a memorizzare il valore 25 nell&rsquo;indirizzo di memoria indicato da x.</p>
-            
-            
-            
-            <p>Col C/C++ &egrave; possibile accedere direttamente agli indirizzi di memoria delle variabili, tramite l&rsquo;accesso <strong>per riferimento</strong> i tipi <strong>puntatore</strong>. Vediamo come.</p>
-            
-            
-            
-            <h4 class="wp-block-heading" id="block-24c071692d46481abb2c0d8f5453be28">Riferimento</h4>
-            
-            
-            
-            <p>Viene definito con il simbolo&nbsp;<strong>&amp;</strong>&nbsp;(chiamato &ldquo;ampersand&rdquo;)&nbsp;<strong>l&rsquo;operatore unario di referenziazione</strong>, detto anche&nbsp;<strong>riferimento</strong>. Questo operatore applicato ad una variabile di qualsiasi tipo restituisce l&rsquo;indirizzo di memoria della variabile stessa. Ad esempio se definiamo:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415; 
-            cout &lt;&lt; &amp;x; </code></pre></div>
-            
-            
-            
-            <p>con l&rsquo;espressione<strong>&nbsp;<code>&amp;x</code></strong><code>&nbsp;</code>otteniamo l&rsquo;indirizzo di memoria dove viene memorizzata x.</p>
-            
-            
-            
-            <p>Ipotizziamo per esempio che l&rsquo;indirizzo di x (ovvero &amp;x) si trovi all&rsquo;indirizzo 0x108 (il prefisso 0x indica che l&rsquo;indirizzo &egrave; espresso in notazione esadecimale). Allora le espressioni x e &amp;x valgono rispettivamente:</p>
-            
-            
-            
-            <figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>Espressione</strong></td><td><strong>valore</strong></td></tr><tr><td>x</td><td>3.1415</td></tr><tr><td>&amp;x</td><td>0x108</td></tr></tbody></table></figure>
-            
-            
-            
-            <h4 class="wp-block-heading" id="block-9f8254cfb8774dddb8ff4f7c164218fb"><strong>Puntatore</strong></h4>
-            
-            
-            
-            <p>Possiamo memorizzare l&rsquo;indirizzo di memoria dove si trova una variabile in una variabile. che memorizza quindi non il valore della variabile ma  appunto l&rsquo;indirizzo di memoria dove essa si trova. Ma questo non &egrave; sufficiente per identificare la variabile. Infatti &egrave; necessario sapere anche cosa c&rsquo;&egrave; in quell&rsquo;indirizzo. Questo perch&eacute; l&rsquo;indirizzo di memoria ci dice solo la posizione dove si trova quella variabile, ma non ci da alcuna informazione sul tipo di variabile.</p>
-            
-            
-            
-            <p>Il tipo di variabile che memorizza un indirizzo deve quindi indicare sia che &egrave; un indirizzo, sia cosa c&rsquo;&egrave; a quell&rsquo;indirizzo. Questo nuovo tipo di dato si chiama <strong>puntatore</strong>. </p>
-            
-            
-            
-            <p>Riprendiamo l&rsquo;esempio precedente:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415;
+                <p>Quando diamo il comando di esecuzione ad una applicazione eseguibile, il sistema operativo predispone
+                    uno spazio di memoria all&rsquo;esecuzione dell&rsquo;applicazione, in cui carica il codice macchina
+                    e lo dedica all&rsquo;applicazione.</p>
+
+
+
+                <p>La memoria di una applicazione &egrave; come un grande array, organizzato in celle dove ogni cella
+                    occupa un byte di memoria (<sup data-fn="fb42f781-bf89-464a-ac6d-81bcf7f8a012" class="fn"><a
+                            href="#fb42f781-bf89-464a-ac6d-81bcf7f8a012"
+                            id="fb42f781-bf89-464a-ac6d-81bcf7f8a012-link">1</a></sup>), ed ogni cella &egrave;
+                    contraddistinta da un indirizzo.</p>
+
+
+
+                <p>L&rsquo;applicazione in esecuzione insieme alla sua memoria dedicata costituiscono
+                    un&nbsp;<strong>processo.</strong></p>
+
+
+
+                <p><strong>Codice e spazio dedicato ai dati sono condivisi nella stessa area di memoria</strong>, come
+                    previsto dall&rsquo;<span class="glossaryLink" aria-describedby="tt"
+                        data-cmtooltip="&lt;div class=glossaryItemTitle&gt;Architettura&lt;/div&gt;&lt;div class=glossaryItemBody&gt;&amp;lt;!-- wp:paragraph --&amp;gt;L&amp;#039;architettura di un sistema informatico indica il modo in cui &egrave; organizzato il software, di quali componenti e moduli &egrave; composto, che ruolo hanno e in che modo comunicano.&amp;lt;br/&amp;gt;&amp;lt;!-- /wp:paragraph --&amp;gt;&lt;/div&gt;"
+                        data-gt-translate-attributes='[{"attribute":"data-cmtooltip", "format":"html"}]' tabindex='0'
+                        role='link'>architettura</span> di Von Neumann. Quando quindi creiamo una variabile
+                    l&rsquo;applicazione (tramite il sistema operativo) trova una locazione di memoria grande abbastanza
+                    per contenerla (si ricorda che le variabili occupano pi&ugrave; o meno bytes in base al loro tipo) e
+                    associa a questo spazio di memoria un <strong>simbolo</strong>, ovvero il nome della variabile. Ad
+                    esempio se vogliamo creare una variabile di tipo int in memoria, quando la inizializziamo il sistema
+                    operativo alloca da qualche parte in memoria uno spazio di tot bytes per memorizzarne il valore (nei
+                    sistemi a 64 bit sono 8 bytes). Viene quindi aggiornata una tabella di simboli che associa ad ogni
+                    simbolo la posizione di memoria del dato ad esso associato.</p>
+
+
+
+                <p>La parte della memoria dedicata ai dati memorizzati come variabili viene chiamata
+                    &ldquo;<strong>heap</strong>&rdquo;. Nello heap le variabili vengono create assegnando loro un
+                    indirizzo che contiene il primo byte della variabile.</p>
+
+
+
+                <p>Esiste poi una porzione speciale della memoria, detta <strong>stack</strong>, che viene utilizzata
+                    dai dati usati dalle funzioni, come vedremo pi&ugrave; avanti.</p>
+
+
+
+                <p>Qui lo schema di memoria di un processo.</p>
+
+
+
+                <figure class="wp-block-image" id="block-d515e996fcfe420b8a23449742809312"><img decoding="async"
+                        src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-54c12d55-229f-4c83-b4b6-dd7d262e4443-ebe3bf22-848a-4b45-9a54-4c0c2db22a70-untitledpng/public"
+                        alt="notion image" /></figure>
+
+
+
+                <h3 class="wp-block-heading" id="block-626df81c1abe4300a11f79379c702c28"><strong>Puntatori e riferimenti
+                        in C/C++</strong></h3>
+
+
+
+                <p>Come abbiamo appena visto le variabili occupano uno spazio di memoria, determinato da un indirizzo e
+                    in C/C++ le memorizziamo in variabili. Ad esempio l&rsquo;istruzione:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int x = 4;</code></pre>
+                </div>
+
+
+
+                <p>memorizza in una struttura dati il valore 4 e l&rsquo;associa al simbolo &ldquo;x&rdquo;, e memorizza
+                    nella tabella dei simboli l&rsquo;associazione tra x e l&rsquo;indirizzo dove si trova il valore di
+                    x. </p>
+
+
+
+                <p>Quando assegnamo un valore ad x, ad esempio con:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>x = 25</code></pre>
+                </div>
+
+
+
+                <p>quello che fa l&rsquo;applicazione &egrave; di andare a memorizzare il valore 25 nell&rsquo;indirizzo
+                    di memoria indicato da x.</p>
+
+
+
+                <p>Col C/C++ &egrave; possibile accedere direttamente agli indirizzi di memoria delle variabili, tramite
+                    l&rsquo;accesso <strong>per riferimento</strong> i tipi <strong>puntatore</strong>. Vediamo come.
+                </p>
+
+
+
+                <h4 class="wp-block-heading" id="block-24c071692d46481abb2c0d8f5453be28">Riferimento</h4>
+
+
+
+                <p>Viene definito con il simbolo&nbsp;<strong>&amp;</strong>&nbsp;(chiamato
+                    &ldquo;ampersand&rdquo;)&nbsp;<strong>l&rsquo;operatore unario di referenziazione</strong>, detto
+                    anche&nbsp;<strong>riferimento</strong>. Questo operatore applicato ad una variabile di qualsiasi
+                    tipo restituisce l&rsquo;indirizzo di memoria della variabile stessa. Ad esempio se definiamo:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415; 
+            cout &lt;&lt; &amp;x; </code></pre>
+                </div>
+
+
+
+                <p>con l&rsquo;espressione<strong>&nbsp;<code>&amp;x</code></strong><code>&nbsp;</code>otteniamo
+                    l&rsquo;indirizzo di memoria dove viene memorizzata x.</p>
+
+
+
+                <p>Ipotizziamo per esempio che l&rsquo;indirizzo di x (ovvero &amp;x) si trovi all&rsquo;indirizzo 0x108
+                    (il prefisso 0x indica che l&rsquo;indirizzo &egrave; espresso in notazione esadecimale). Allora le
+                    espressioni x e &amp;x valgono rispettivamente:</p>
+
+
+
+                <figure class="wp-block-table">
+                    <table class="has-fixed-layout">
+                        <tbody>
+                            <tr>
+                                <td><strong>Espressione</strong></td>
+                                <td><strong>valore</strong></td>
+                            </tr>
+                            <tr>
+                                <td>x</td>
+                                <td>3.1415</td>
+                            </tr>
+                            <tr>
+                                <td>&amp;x</td>
+                                <td>0x108</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+
+
+                <h4 class="wp-block-heading" id="block-9f8254cfb8774dddb8ff4f7c164218fb"><strong>Puntatore</strong></h4>
+
+
+
+                <p>Possiamo memorizzare l&rsquo;indirizzo di memoria dove si trova una variabile in una variabile. che
+                    memorizza quindi non il valore della variabile ma appunto l&rsquo;indirizzo di memoria dove essa si
+                    trova. Ma questo non &egrave; sufficiente per identificare la variabile. Infatti &egrave; necessario
+                    sapere anche cosa c&rsquo;&egrave; in quell&rsquo;indirizzo. Questo perch&eacute; l&rsquo;indirizzo
+                    di memoria ci dice solo la posizione dove si trova quella variabile, ma non ci da alcuna
+                    informazione sul tipo di variabile.</p>
+
+
+
+                <p>Il tipo di variabile che memorizza un indirizzo deve quindi indicare sia che &egrave; un indirizzo,
+                    sia cosa c&rsquo;&egrave; a quell&rsquo;indirizzo. Questo nuovo tipo di dato si chiama
+                    <strong>puntatore</strong>. </p>
+
+
+
+                <p>Riprendiamo l&rsquo;esempio precedente:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415;
             cout &lt;&lt; &amp;x;
-            float* pointer = &amp;x;</code></pre></div>
-            
-            
-            
-            <p>L&rsquo;istruzione float* pointer = &amp;x va quindi a definire un nuovo tipo di dato che va ad indicare che si tratta di un puntatore, e che a quell&rsquo;indirizzo si trova una variabile di tipo float.</p>
-            
-            
-            
-            <p>Ovvero la variabile <strong>puntatore</strong> &egrave; definita come un <strong>puntatore a float</strong> (float*) e ha come valore <strong>l&rsquo;indirizzo di x</strong>.</p>
-            
-            
-            
-            <p>Quindi le espressioni precedenti valgono:</p>
-            
-            
-            
-            <figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>Espressione</strong></td><td><strong>valore</strong></td><td><strong>tipo</strong></td></tr><tr><td>x</td><td>3.1415</td><td>float</td></tr><tr><td>&amp;x</td><td>0x108</td><td>(indirizzo puro)</td></tr><tr><td>pointer</td><td>0x108</td><td>float*</td></tr></tbody></table></figure>
-            
-            
-            
-            <p>Il simbolo *&nbsp;(chiamato &ldquo;star&rdquo;)&nbsp;<strong>l&rsquo;operatore unario di dereferenziazione</strong>, che serve a gestire le  <strong>variabili</strong>&nbsp;<strong>puntatore</strong>, che contengono l&rsquo;indirizzo di memoria di una variabile. Queste variabili sono dichiarate quindi aggiungendo il simbolo * al tipo di dato a cui puntano.</p>
-            
-            
-            
-            <p>Un indirizzo pu&ograve; anche essere vuoto, in questo caso non memorizza alcun indirizzo, ma questo pu&ograve; essere assegnato in un secondo momento:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int* pointer = NULL;</code></pre></div>
-            
-            
-            
-            <h3 class="wp-block-heading">Uso dei puntatori nelle espressioni</h3>
-            
-            
-            
-            <p>Quando usiamo la variabile puntatore bisogna fare attenzione perch&eacute; quando la usiamo in una espressione andiamo ad indicare il valore della variabile a cui punta. Quindi</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415;
+            float* pointer = &amp;x;</code></pre>
+                </div>
+
+
+
+                <p>L&rsquo;istruzione float* pointer = &amp;x va quindi a definire un nuovo tipo di dato che va ad
+                    indicare che si tratta di un puntatore, e che a quell&rsquo;indirizzo si trova una variabile di tipo
+                    float.</p>
+
+
+
+                <p>Ovvero la variabile <strong>puntatore</strong> &egrave; definita come un <strong>puntatore a
+                        float</strong> (float*) e ha come valore <strong>l&rsquo;indirizzo di x</strong>.</p>
+
+
+
+                <p>Quindi le espressioni precedenti valgono:</p>
+
+
+
+                <figure class="wp-block-table">
+                    <table class="has-fixed-layout">
+                        <tbody>
+                            <tr>
+                                <td><strong>Espressione</strong></td>
+                                <td><strong>valore</strong></td>
+                                <td><strong>tipo</strong></td>
+                            </tr>
+                            <tr>
+                                <td>x</td>
+                                <td>3.1415</td>
+                                <td>float</td>
+                            </tr>
+                            <tr>
+                                <td>&amp;x</td>
+                                <td>0x108</td>
+                                <td>(indirizzo puro)</td>
+                            </tr>
+                            <tr>
+                                <td>pointer</td>
+                                <td>0x108</td>
+                                <td>float*</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+
+
+                <p>Il simbolo *&nbsp;(chiamato &ldquo;star&rdquo;)&nbsp;<strong>l&rsquo;operatore unario di
+                        dereferenziazione</strong>, che serve a gestire le
+                    <strong>variabili</strong>&nbsp;<strong>puntatore</strong>, che contengono l&rsquo;indirizzo di
+                    memoria di una variabile. Queste variabili sono dichiarate quindi aggiungendo il simbolo * al tipo
+                    di dato a cui puntano.</p>
+
+
+
+                <p>Un indirizzo pu&ograve; anche essere vuoto, in questo caso non memorizza alcun indirizzo, ma questo
+                    pu&ograve; essere assegnato in un secondo momento:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int* pointer = NULL;</code></pre>
+                </div>
+
+
+
+                <h3 class="wp-block-heading">Uso dei puntatori nelle espressioni</h3>
+
+
+
+                <p>Quando usiamo la variabile puntatore bisogna fare attenzione perch&eacute; quando la usiamo in una
+                    espressione andiamo ad indicare il valore della variabile a cui punta. Quindi</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415;
             cout &lt;&lt; &amp;x;
             float* pointer = &amp;x;
             cout &lt;&lt; pointer &lt;&lt; endl; // stampa l'indirizzo
-            cout &lt;&lt; *pointer &lt;&lt; endl; // stampa il valore della variabile a cui punta pointer</code></pre></div>
-            
-            
-            
-            <p>*pointer indica quindi il &ldquo;valore puntato&rdquo; quando si trova in una espressione.</p>
-            
-            
-            
-            <p>Quindi l&rsquo;operatore star * ha due comportamenti diversi a seconda del contesto in cui &egrave; utilizzato:</p>
-            
-            
-            
-            <ul class="wp-block-list">
-            <li>quando &egrave; a sinistra dell&rsquo;uguale (in una dichiarazione, quindi a sinistra dell&rsquo;uguale) indica un puntatore ad uno specifico tipo di dato (<strong>&ldquo;puntatore a&hellip;&rdquo;</strong>); </li>
-            
-            
-            
-            <li>quando &egrave; usato in una espressione (a destra dell&rsquo;uguale, o come espressione da calcolare, stampare o inviare ad una funzione) viene usato per indicare il valore a cui punta (<strong>&ldquo;valore puntato da&rdquo;</strong>).</li>
-            </ul>
-            
-            
-            
-            <p>Quando sono usati quindi come espressioni il <strong>riferimento (&amp;)</strong> ed il <strong>puntatore (*)</strong> sono quindi due operatori&nbsp;<strong>complementari</strong> <strong>tra loro</strong>. &ugrave;</p>
-            
-            
-            
-            <p>Il primo (&amp;) restituisce l&rsquo;indirizzo della variabile.</p>
-            
-            
-            
-            <p>il secondo (*) da il valore puntato dalla variabile.</p>
-            
-            
-            
-            <p>Vediamo ad esempio questo codice:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int a = 6;
+            cout &lt;&lt; *pointer &lt;&lt; endl; // stampa il valore della variabile a cui punta pointer</code></pre>
+                </div>
+
+
+
+                <p>*pointer indica quindi il &ldquo;valore puntato&rdquo; quando si trova in una espressione.</p>
+
+
+
+                <p>Quindi l&rsquo;operatore star * ha due comportamenti diversi a seconda del contesto in cui &egrave;
+                    utilizzato:</p>
+
+
+
+                <ul class="wp-block-list">
+                    <li>quando &egrave; a sinistra dell&rsquo;uguale (in una dichiarazione, quindi a sinistra
+                        dell&rsquo;uguale) indica un puntatore ad uno specifico tipo di dato (<strong>&ldquo;puntatore
+                            a&hellip;&rdquo;</strong>); </li>
+
+
+
+                    <li>quando &egrave; usato in una espressione (a destra dell&rsquo;uguale, o come espressione da
+                        calcolare, stampare o inviare ad una funzione) viene usato per indicare il valore a cui punta
+                        (<strong>&ldquo;valore puntato da&rdquo;</strong>).</li>
+                </ul>
+
+
+
+                <p>Quando sono usati quindi come espressioni il <strong>riferimento (&amp;)</strong> ed il
+                    <strong>puntatore (*)</strong> sono quindi due operatori&nbsp;<strong>complementari</strong>
+                    <strong>tra loro</strong>. &ugrave;</p>
+
+
+
+                <p>Il primo (&amp;) restituisce l&rsquo;indirizzo della variabile.</p>
+
+
+
+                <p>il secondo (*) da il valore puntato dalla variabile.</p>
+
+
+
+                <p>Vediamo ad esempio questo codice:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>int a = 6;
             int *x = &amp;a; // il cui valore sar&agrave; l'indirizzo di a
             int b = 5;
             int *y = &amp;b; // il cui valore sar&agrave; l'indirizzo di b
             int somma = *y + *x; // la somma far&agrave; 11 
-            int *psomma = &amp;somma; // il cui valore &egrave; l'indirizzo di memoria dove si trova la somma</code></pre></div>
-            
-            
-            
-            <p>Questo &egrave; un esempio di memoria risultante.</p>
-            
-            
-            
-            <figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td class="has-text-align-left" data-align="left">0x106</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x105</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x104</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x103</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x102 (psomma, cio&egrave; &amp;somma)</td><td>11</td></tr><tr><td class="has-text-align-left" data-align="left">0x101 (y, cio&egrave; &amp;b)</td><td>5</td></tr><tr><td class="has-text-align-left" data-align="left">0x100 (x, cio&egrave; &amp;a)</td><td>6</td></tr></tbody></table></figure>
-            
-            
-            
-            <p>I puntatori sono variabili numeriche, quindi &egrave; possibile usarli per accedere ad indirizzi di memoria. A dall&rsquo;esempio precedente:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int* c = *(x+1); // indica l'indirizzo successivo a x, nell'esempio 0x101</code></pre></div>
-            
-            
-            
-            <p>Coi puntatori si ha quindi un accesso diretto alla memoria del processo, e si pu&ograve; quindi accedere ad ogni elemento della memoria, compreso lo stack e il codice. <em>Non esiste alcun controllo e quindi &egrave; responsabilit&agrave; del programmatore scrivere un programma che non modifichi se stesso (a meno che, ovviamente non lo voglia e sappia cosa sta facendo!).</em></p>
-            
-            
-            
-            <h2 class="wp-block-heading">Array e puntatori</h2>
-            
-            
-            
-            <p>Gli array sono dei puntatori. In altri termini. Sia dato il seguente array:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int x[3] = {10,20,30};</code></pre></div>
-            
-            
-            
-            <p>allora x &egrave; un puntatore ad intero (&egrave; di tipo <code>int*</code>) . In altri termini:</p>
-            
-            
-            
-            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>cout &lt;&lt; *x; // stampa x[0] ovvero 10
-            cout &lt;&lt; *(x+1); // stampa x[1] cio&egrave; 20</code></pre></div>
-            
-            
-            
-            <p>Peranto l&rsquo;espressione x[i] &egrave; del tutto equivalente a *(x+i).</p>
-            
-            
-            
-            <p><em>Ancora una volta si ricorda che non esiste controllo sugli indici di un array e quindi &egrave; possibile leggere e scrivere fuori dai limiti di un array.</em></p>
-            
-            
-            
-            <p>Il C/C++ &egrave; un linguaggio che offre pieno e totale controllo della memoria. </p>
-            </div>
-         <div class="row"><a href="#home">Home</a></div>              
-      </div>
-      <div id="pagina2" class="page">
-         <div class="row">
+            int *psomma = &amp;somma; // il cui valore &egrave; l'indirizzo di memoria dove si trova la somma</code></pre>
+                </div>
 
-         </div>         
-         <div class="row"><a href="#home">Home</a></div>                  
-      </div>
-      <div id="pagina3" class="page">            
-         <div class="row">
-            
-         </div>
-         <div class="row"><a href="#home">Home</a></div>
-      </div>
-   </div>
-   <script type="module" src="./script.js"></script>
+
+
+                <p>Questo &egrave; un esempio di memoria risultante.</p>
+
+
+
+                <figure class="wp-block-table">
+                    <table class="has-fixed-layout">
+                        <tbody>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x106</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x105</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x104</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x103</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x102 (psomma, cio&egrave; &amp;somma)
+                                </td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x101 (y, cio&egrave; &amp;b)</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-align-left" data-align="left">0x100 (x, cio&egrave; &amp;a)</td>
+                                <td>6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+
+
+                <p>I puntatori sono variabili numeriche, quindi &egrave; possibile usarli per accedere ad indirizzi di
+                    memoria. A dall&rsquo;esempio precedente:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>int* c = *(x+1); // indica l'indirizzo successivo a x, nell'esempio 0x101</code></pre>
+                </div>
+
+
+
+                <p>Coi puntatori si ha quindi un accesso diretto alla memoria del processo, e si pu&ograve; quindi
+                    accedere ad ogni elemento della memoria, compreso lo stack e il codice. <em>Non esiste alcun
+                        controllo e quindi &egrave; responsabilit&agrave; del programmatore scrivere un programma che
+                        non modifichi se stesso (a meno che, ovviamente non lo voglia e sappia cosa sta facendo!).</em>
+                </p>
+
+
+
+                <h2 class="wp-block-heading">Array e puntatori</h2>
+
+
+
+                <p>Gli array sono dei puntatori. In altri termini. Sia dato il seguente array:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int x[3] = {10,20,30};</code></pre>
+                </div>
+
+
+
+                <p>allora x &egrave; un puntatore ad intero (&egrave; di tipo <code>int*</code>) . In altri termini:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>cout &lt;&lt; *x; // stampa x[0] ovvero 10
+            cout &lt;&lt; *(x+1); // stampa x[1] cio&egrave; 20</code></pre>
+                </div>
+
+
+
+                <p>Peranto l&rsquo;espressione x[i] &egrave; del tutto equivalente a *(x+i).</p>
+
+
+
+                <p><em>Ancora una volta si ricorda che non esiste controllo sugli indici di un array e quindi &egrave;
+                        possibile leggere e scrivere fuori dai limiti di un array.</em></p>
+
+
+
+                <p>Il C/C++ &egrave; un linguaggio che offre pieno e totale controllo della memoria. </p>
+            </div>
+            <div class="row"><a href="#home">Home</a></div>
+        </div>
+        <div id="funzioni" class="page">
+            <div class="row">
+                <h1 class="eckb-article-title">Funzioni</h1>
+
+                <strong>Cenni matematici</strong></h3>
+
+
+
+                <p>Da un punto di vista matematico la definizione pi&ugrave; semplice di funzione &egrave; una relazione
+                    tra due insiemi A (detto dominio) e B (detto codominio), che associa ad ogni elemento di A un
+                    elemento di B.</p>
+
+
+
+                <p>In termini formali si esprime nel seguente modo:</p>
+
+
+
+                <p><strong>f:A-&gt;B </strong></p>
+
+
+
+                <p>Dove per ogni<strong> x &isin; A</strong> si ha&nbsp;<em>f(x)&nbsp;=</em>&nbsp;B</p>
+
+
+
+                <p>Esempi:</p>
+
+
+
+                <ul id="block-2b55c651d649497e99d74fceb026da38" class="wp-block-list">
+                    <li>F(x) = 2*x: dominio numeri interi e codominio numeri interi</li>
+
+
+
+                    <li>F(x) = x / 2: dominio numeri interi e codominio numeri razionali</li>
+                </ul>
+
+
+
+                <p>Da questa definizione pi&ugrave; semplice discende la definizione
+                    pi&ugrave;&nbsp;<strong>generale</strong>: dato un gruppo arbitrario (e finito) di insiemi A, B,
+                    C&hellip; K una funzione &egrave; definita come una relazione tra questi ed un insieme Z, che
+                    associa un elemento di A, un elemento di B, un elemento di C, e via andare <strong>ad un elemento di
+                        Z</strong>. Si ha
+                    ovverof:X,Y,Z&hellip;K&nbsp;&rarr;&nbsp;Z<em>f</em>:<em>X</em>,<em>Y</em>,<em>Z</em>&hellip;<em>K</em>&nbsp;&rarr;&nbsp;<em>Z</em>
+                </p>
+
+
+
+                <p>dove per a&nbsp;<strong>&isin;</strong>&nbsp;A, b&nbsp;<strong>&isin;</strong>&nbsp;B,
+                    c&nbsp;<strong>&isin;</strong>&nbsp;C &hellip; k&nbsp;<strong>&isin;</strong>&nbsp;K&nbsp;&nbsp;si
+                    ha&nbsp;quindi che <em>f(a, b, c, &hellip; k)&nbsp;=</em>&nbsp;Z</p>
+
+
+
+                <p>a,b,c,&hellip;k sono una&nbsp;<strong>tupla di parametri (detti anche argomenti)</strong>, e
+                    f(a,b,c,&hellip;k) &egrave; il&nbsp;<strong>risultato della funzione, cio&egrave; il suo valore di
+                        ritorno.</strong></p>
+
+
+
+                <h3 class="wp-block-heading" id="block-7e8509481d4e4434a6e2ad2f7bdd6eb6"><strong>Le funzioni in
+                        informatica</strong></h3>
+
+
+
+                <p>La definizione matematica di funzione viene utilizzata in informatica per definire dei sottoprogrammi
+                    del programma principale. Questi sottoprogrammi svolgono quindi funzioni del programma e sono
+                    riutilizzabili in punti diversi del programma principale. L&rsquo;importanza delle funzioni &egrave;
+                    quindi quella di rendere possibile la modularizzazione dei programmi informatici: &egrave; possibile
+                    suddividere un programma in sottoprogrammi, e riutilizzare gli stessi sottoprogrammi in programmi
+                    differenti.</p>
+
+
+
+                <p>Questo rende possibile quindi:</p>
+
+
+
+                <ul id="block-86ba902baa624eb8ba39e24828bc1da4" class="wp-block-list">
+                    <li>Scrivere&nbsp;<strong>meno codice, evitando ripetizioni;</strong></li>
+
+
+
+                    <li><strong>Riusare codice</strong>&nbsp;gi&agrave; sviluppato;</li>
+
+
+
+                    <li>Riusare codice di&nbsp;<strong>terze parti</strong>;</li>
+
+
+
+                    <li>Sviluppare progetti complessi mediante la strategia del &ldquo;<strong>divide et
+                            impera</strong>&rdquo; che consiste nel suddividere un grosso problema in sottoproblemi, da
+                        risolvere separatamente;</li>
+
+
+
+                    <li><strong>Suddividere</strong>&nbsp;il lavoro di un singolo progetto tra pi&ugrave; programmatori.
+                    </li>
+                </ul>
+
+
+
+                <p>Le funzioni sono quindi alla base della cosiddetta programmazione&nbsp;<strong>modulare</strong>,
+                    ovvero una metodologia di programmazione che consiste nel realizzare programmi composti da moduli,
+                    ognuno dei quali specializzato in specifiche attivit&agrave;.</p>
+
+
+
+                <h3 class="wp-block-heading" id="block-68177be0a1534634b39f06a23936707c"><strong>Struttura di una
+                        funzione</strong></h3>
+
+
+
+                <p>In linguaggio C/C++ (e in modo simile nella maggior parte dei linguaggi di programmazione) una
+                    funzione pu&ograve; essere dichiarata nel seguente modo:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>returnType functionName ([parameter1Type parameter1][, parameter2Type parameter2]&hellip;) {
+   &hellip; (code block)
+  [ return expression; ]
+}</code></pre>
+                </div>
+
+
+
+                <p>Le parentersi quadre mostrano quali elementi sono facoltativi.</p>
+
+
+
+                <p>Vediamo singolarmente i singoli elementi:</p>
+
+
+
+                <p><code><strong>returnType</strong></code>: tipo di ritorno, esso pu&ograve; essere qualsiasi tipo
+                    valido C++</p>
+
+
+
+                <p><code><strong>functionName</strong></code>: nome della funzione</p>
+
+
+
+                <p><code><strong>parameterType</strong></code>: tipo di dato passato come parametro</p>
+
+
+
+                <p><code><strong>parameter</strong></code>: tipo di dato passato come parametro</p>
+
+
+
+                <p><code><strong>return expression</strong></code>: istruzione che restituisce una espressione che deve
+                    essere del tipo di ritorno</p>
+
+
+
+                <p>Come si vede sopra, tutti i parametri sono facoltativi. L&rsquo;argomento dei parametri sar&agrave;
+                    approfondito nella sezione relativa ai parametri.</p>
+
+
+
+                <p>La prima riga di intestazione della funzione (che contiene il tipo di ritorno, il nome, ed i
+                    parametri) viene chiamata&nbsp;<strong>firma</strong>.</p>
+
+
+
+                <p>Vediamo un esempio:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int somma(int x, int y) {
+  return x+y;
+}</code></pre>
+                </div>
+
+
+
+                <p>Questa funzione prende due parametri x ed y di tipo intero e restituisce la loro somma.</p>
+
+
+
+                <p>All&rsquo;interno di un blocco di funzione &egrave; possibile scrivere codice, compresa la creazione
+                    di variabile e l&rsquo;utilizzo di costrutti.</p>
+
+
+
+                <p>Se in una funzione matematica (come sopra descritte) si trasforma un insieme di parametri in un
+                    risultato, le funzioni in ambito informatico estendono questo concetto. Esse infatti possono
+                    ricevere zero, uno o pi&ugrave; parametri.</p>
+
+
+
+                <p>Possono anche non restituire alcun valore: in questo caso bisogna impostare come tipo di ritorno la
+                    parola chiave &ldquo;void&rdquo;. Esse inoltre non prevedono una istruzione return.</p>
+
+
+
+                <p>Esempio:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>void printResult(char character) {
+  cout &lt;&lt; character;
+}</code></pre>
+                </div>
+
+
+
+                <h3 class="wp-block-heading" id="block-a8c8b41d88954904bc522cc1d0ced87c"><strong>Chiamata di funzione e
+                        sua esecuzione</strong></h3>
+
+
+
+                <p>Una funzione viene eseguita quando viene invocata dal main() oppure da altra funzione. La funzione da
+                    cui si chiama si chiama&nbsp;<strong>chiamante</strong>, la funzione chiamata si
+                    chiama&nbsp;<strong>funzione chiamata</strong>.</p>
+
+
+
+                <p>Esempio:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>#include &lt;iostream&gt;
+using namespace std;
+
+int somma(int x, int y) {
+  int sum = x+y;
+  return sum;
+}
+
+int main() {
+  int a;
+  cout &lt;&lt; &ldquo;Inserisci il primo addendo: &ldquo;;
+  cin &gt;&gt; a;
+  int b;
+  cout &lt;&lt; &ldquo;Inserisci il secondo addendo: &rdquo;;
+  cin &gt;&gt; b;
+  cout &lt;&lt; &ldquo;La somma &egrave;: &ldquo;;
+  cout &lt;&lt; somma(a, b);
+  return 0;
+}</code></pre>
+                </div>
+
+
+
+                <p>Nell&rsquo;esecuzione di questo codice, la funzione chiamante cede il controllo alla funzione somma,
+                    che utilizza i valori ricevuti per eseguire la sua elaborazione (una somma) e restituisce il valore
+                    che viene poi elaborato nel main (viene stampato a schermo).</p>
+
+
+
+                <p>I parametri con cui &egrave; definita la funzione</p>
+
+
+
+                <pre class="wp-block-code"><code>int somma(int x, int y)</code></pre>
+
+
+
+                <p>sono chiamati parametri formali.</p>
+
+
+
+                <p>Quando viene chiamata dall&rsquo;istruzione:</p>
+
+
+
+                <pre class="wp-block-code"><code>somma(a, b)</code></pre>
+
+
+
+                <p>questi parametri formali assumono poi il valore effettivo di a e b.</p>
+
+
+
+                <h2 class="wp-block-heading">Schema della memoria</h2>
+
+
+
+                <p>Abbiamo gi&agrave; visto (<a
+                        href="https://cipiaceinfo.it/docs/tecnologie/sistemi-operativi/sistemi-operativi-concorrenti/"
+                        data-type="epkb_post_type_1" data-id="191">in questa lezione</a>) che il processo in esecuzione
+                    ha una memoria dedicata composta da uno spazio per il codice, uno per lo heap ed uno per lo stack:
+                </p>
+
+
+
+                <figure class="wp-block-image" id="block-297a0096736d483ea38d649ff4bd831c"><img decoding="async"
+                        src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-54c12d55-229f-4c83-b4b6-dd7d262e4443-87273618-6ad7-4ae6-bd87-a6121bde4955-untitledpng/public"
+                        alt="notion image" /></figure>
+
+
+
+                <p><a href="https://cipiaceinfo.it/docs/tecnologie/architetture-elaboratori/stack/"
+                        data-type="epkb_post_type_1" data-id="122">L&rsquo;argomento &egrave; approfondito qui.</a></p>
+
+
+
+                <p>L&rsquo;utilizzo dello stack garantisce che l&rsquo;esecuzione di una funzione abbia uno spazio di
+                    memoria&nbsp;<strong>dedicato. </strong>Quando la funzione viene eseguita il processore inserisce
+                    nello stack (che ha una struttura dati a pila) i parametri della funzione stessa, ed il punto del
+                    programma a cui tornare a funzione conclusa. Inoltre la funzione memorizza nello stack tutte le
+                    variabili locali che definisce. Al termine dell&rsquo;esecuzione il processore rimuove dallo stack
+                    tutti questi elementi e lo riporta allo stato che aveva prima dell&rsquo;esecuzione. Inoltre
+                    restituisce il valore di ritorno (quando presente) all&rsquo;istruzione chiamante.
+                    Nell&rsquo;esempio sopra, quindi, la funzione somma svolge le sue operazioni, e poi quando termina
+                    tutti i suoi dati vengono rimossi dallo stack. Questo meccanismo garantisce che lo spazio
+                    &ldquo;locale&rdquo; usato dalla funzione esista&nbsp;<strong>solo durante
+                        l&rsquo;esecuzione</strong>&nbsp;della funzione, e che venga poi eliminato una volta che la
+                    funzione termina la sua esecuzione. La funzione &egrave; quindi una specie di bolla che viene creata
+                    e distrutta.</p>
+
+
+
+                <p>E&rsquo; importante quindi capire che i parametri passati alla funzione vengono copiati nello stack.
+                    Ed essendo delle copie, possono essere modificati senza che il valore degli originali sia
+                    modificato.</p>
+
+
+
+                <p>Se poi una funzione chiama un&rsquo;altra funzione, viene creata una nuova area nello stack che si
+                    aggiunge alla precedente area dello stack, questo perch&eacute; lo stack &egrave; una pila. Quindi
+                    anche la seconda funzione memorizzer&agrave; una copia dei parametri, pi&ugrave; le proprie
+                    variabili locali, fino al termine della sua esecuzione (poi saranno cancellati).</p>
+
+
+
+                <p>Il codice che viene eseguito nella funzione vede solo i dati relativi alla funzione attualmente in
+                    esecuzione e non la funzione chiamante, e che una volta che viene conclusa l&rsquo;esecuzione, torna
+                    visibile l&rsquo;area sottostante.</p>
+
+
+
+                <h3 class="wp-block-heading" id="block-77fceb5f2f4f42858336903d5bb8c8f1"><strong>Passaggio di parametri
+                        alle funzioni</strong></h3>
+
+
+
+                <h4 class="wp-block-heading" id="block-bb8f120b6741404e9591df1144d2b3bc"><strong>Per valore</strong>
+                </h4>
+
+
+
+                <p>Il passaggio di parametri che abbiamo appena visto viene definito per &ldquo;valore&rdquo;: i
+                    parametri della funzione vengono copiate nello stack, e la funzione lavora solo con questa copia.
+                </p>
+
+
+
+                <p>Nella chiamata per valore il chiamante pu&ograve; passare alla funzione parametri sia sotto forma di
+                    un simbolo (variabile o costante) che sotto forma di espressione. E&rsquo; quindi possibile
+                    eseguire:</p>
+
+
+
+                <p><code>somma(3, 4);</code></p>
+
+
+
+                <p><code>somma(a, b);</code></p>
+
+
+
+                <p><code>somma(a, 3);</code></p>
+
+
+
+                <p><code>somma(0, a);</code></p>
+
+
+
+                <p>La funzione chiamata copia i valori ricevuti nelle variabili definite negli argomenti, e pu&ograve;
+                    modificare il valore queste variabili. <strong>Siccome &egrave; un copia questa modifica non ha
+                        effetto sull variabile originaria.</strong></p>
+
+
+
+                <h4 class="wp-block-heading" id="block-8c70df4f01a146ec83b22dfe0d05bd55"><strong>Per
+                        riferimento</strong></h4>
+
+
+
+                <p>In molte situazioni pu&ograve; essere invece utile poter modificare i valori originali: le funzioni
+                    possono ritornare un solo valore ma quando ne vogliamo modificare pi&ugrave; di uno, diventa molto
+                    scomodo.</p>
+
+
+
+                <p>Tuttavia se come parametro passiamo un puntatore ad una variabile, quindi il suo indirizzo di
+                    memoria, quello che viene effettivamente copiato &egrave; l&rsquo;indirizzo, non il valore. Nella
+                    funzione possiamo quindi modificare il valore &ldquo;puntato&rdquo;, che andr&agrave; a modificare
+                    il valore della variabile originale. Questo perch&egrave; non abbiamo copiato la variabile ma solo
+                    il suo indirizzo di memoria.</p>
+
+
+
+                <p>Questo tipo di chiamata viene detta&nbsp;<strong>per riferimento</strong>.</p>
+
+
+
+                <p>In questo esempio vedremo una funzione senza valore di ritorno, che va a memorizzare direttamente il
+                    risultato con un puntatore di memoria.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>void sommaConPuntatore(int* sum, int x, int y) {
+   *sum = x + y;
+}
+
+int main() {
+  int somma;
+  sommaConPuntatore(&amp;somma, 3, 4);
+  cout &lt;&lt; somma;
+}</code></pre>
+                </div>
+
+
+
+                <p>Come si pu&ograve; notare, la firma della funzione prevede che il primo parametro sia un puntatore ad
+                    intero (cio&egrave; l&rsquo;indirizzo di memoria che contiene una variabile intera). Quando viene
+                    eseguita la funzione verr&agrave; quindi passato il riferimento alla variabile somma (cio&egrave;
+                    appunto il suo indirizzo di memoria).</p>
+
+
+
+                <p>Quando viene eseguita la funzione, quindi, questa acceder&agrave; al valore originale della variabile
+                    somma, e questo rimarr&agrave; anche una volta che la funzione terminer&agrave;.</p>
+
+
+
+                <p>Vediamo un altro esempio, molto pi&ugrave; significativo. Poniamo di voler scambiare il valore di due
+                    variabili, e creiamo una funzione che svolge per noi questa cosa.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>#include &lt;iostream&gt;
+using namespace std;
+
+void swap(int *x, int *y) {
+  int temp = *x;
+  *x = *y;
+  *y = temp;
+}
+
+int main() {
+  int a;
+  cout &lt;&lt; &ldquo;Inserisci il primo numero: &ldquo;;
+  cin &gt;&gt; a;
+  int b;
+  cout &lt;&lt; &ldquo;Inserisci il secondo numero: &rdquo;;
+  cin &gt;&gt; b;
+  swap(&amp;a, &amp;b);
+  cout &lt;&lt; &ldquo;Adesso il primo &egrave;: &ldquo; &lt;&lt; b &lt;&lt; endl;
+  cout &lt;&lt; &ldquo;Adesso il secondo &egrave;: &ldquo; &lt;&lt; a &lt;&lt; endl;
+  return 0;
+}</code></pre>
+                </div>
+
+
+
+                <p>E&rsquo; importante osservare di nuovo che:</p>
+
+
+
+                <ul id="block-639ada1a0cf84dd588e0b45f5e93d1d3" class="wp-block-list">
+                    <li>Nella firma della funzione swap, si usano degli argomenti puntatore (contraddistinti dal
+                        carattere *). Il puntatore&nbsp;&nbsp;&egrave; il valore dell&rsquo;indirizzo di memoria dove
+                        risiede la variabile.</li>
+
+
+
+                    <li>Per accedere alla variabile puntata bisogna quindi referenziarla usando come prefisso il
+                        carattere *.</li>
+                </ul>
+
+
+
+                <p>L&rsquo;utilizzo di parametri con riferimento permette di aggirare l&rsquo;ostacolo avere una
+                    funzione che restituisce un unico valore, in quanto &egrave; possibile modificare uno o pi&ugrave;
+                    parametri della funzione.</p>
+
+
+
+                <h3 class="wp-block-heading" id="block-d9c3b1ea619544a28c6c4cfa5957b5a0"><strong>Array</strong></h3>
+
+
+
+                <p>Le funzioni che prevedono degli array come parametri usano sempre la modalit&agrave; per riferimento.
+                    Questo perch&eacute; gli array non sono un tipo base, ma si riferiscono ad un&rsquo;area di memoria
+                    che pu&ograve; contenere molti valori. E&rsquo; possibile chiamare una funzione con array con 3
+                    modalit&agrave; alternative ma equivalenti:</p>
+
+
+
+                <ul id="block-c03c9665ace4439297abcef814aa2067" class="wp-block-list">
+                    <li><code>void myFunction(int *vector, &hellip;)</code></li>
+                </ul>
+
+
+
+                <p>In questa modalit&agrave; &ndash; la pi&ugrave; generica &ndash; viene dato un generico puntatore a
+                    variabile. Sta al programmatore capire che non &egrave; un puntatore ad un singolo valore ma ad un
+                    intero array, e quale la dimensione dell&rsquo;array.</p>
+
+
+
+                <p><em>Questo &egrave; dovuto al fatto che una variabile di tipo array &egrave;, di fatto, sempre un
+                        puntatore al primo elemento dell&rsquo;array stesso.</em></p>
+
+
+
+                <p>E&rsquo; quindi fortemente raccomandato passare almeno un secondo parametro con la dimensione
+                    dell&rsquo;array. Questo perch&eacute; la funzione non ha modo di sapere la dimensione
+                    dell&rsquo;array stesso.</p>
+
+
+
+                <ul id="block-2f7b36e6f9374467ac0f0a789055ca45" class="wp-block-list">
+                    <li><code>void myFunction(int vector[], &hellip;)</code></li>
+                </ul>
+
+
+
+                <p>In questa modalit&agrave; viene indicato che il parametro &egrave; un array, ma &egrave; solo un
+                    formalismo, la funzione ignora la dimensione dell&rsquo;array.</p>
+
+
+
+                <ul id="block-ab88e45de0b040bfac4e5597f3a2f163" class="wp-block-list">
+                    <li><code>void myFunction(int vector[10], &hellip;)</code></li>
+                </ul>
+
+
+
+                <p>In questa modalit&agrave; viene indicato sia che il parametro &egrave; un array, sia viene data la
+                    dimensione. Questo significa che chi scrive la funzione si aspetta un array di quella dimensione: in
+                    questo caso &egrave; pi&ugrave; difficile sbagliare, ma ovviamente funziona quando si sa gi&agrave;
+                    che gli array hanno una dimensione fissa.</p>
+
+
+
+                <p><em>Si ricorda che in C++ non esiste nessun meccanismo che impedisca di superare i limiti di un
+                        array. E&rsquo; compito del programmatore evitare questo tipo di errori.</em></p>
+
+
+
+                <p>Non &egrave; invece possibile, almeno con le strutture finora viste, creare una funzione che
+                    restituisca un array. Infatti quando si crea un array dentro ad una funzione, questo viene distrutto
+                    dallo stack quando si esce dalla funzione. Questo limite verr&agrave; superato con l&rsquo;uso del
+                    modificatore&nbsp;<em>static</em>, che si vedr&agrave; successivamente.</p>
+
+
+
+                <h3 class="wp-block-heading" id="block-ebf9519dae364c81a9929c728205095e"><strong>Funzioni
+                        deterministiche e non deterministiche</strong></h3>
+
+
+
+                <p>L&rsquo;esempio appena visto &egrave; un esempio di come il concetto di funzione in C++ &egrave;
+                    pi&ugrave; generale rispetto a quello definito nelle funzioni matematiche.</p>
+
+
+
+                <p>Infatti, se una funzione matematica &egrave; una relazione che lega una determinata tupla di
+                    parametri ad un risultato, le funzioni in ambito informatico &ndash; ed in particolare in C++
+                    &ndash; estendono questo concetto. Esse infatti possono:</p>
+
+
+
+                <ul id="block-83ecec615bbe4edda8817385f86ed4d3" class="wp-block-list">
+                    <li>Ricevere zero, uno o pi&ugrave; parametri;</li>
+
+
+
+                    <li>Restituire un risultato o anche nessun risultato;</li>
+
+
+
+                    <li>Ricevere uno o pi&ugrave; parametri e modificarli all&rsquo;interno della funzione.</li>
+                </ul>
+
+
+
+                <p>Le funzioni che legano una determinata tupla di parametri ad un risultato sono definite come come
+                    deterministiche, in quanto a partire da una determinata tupla di parametri forniscono sempre lo
+                    stesso risultato.</p>
+
+
+
+                <p>Se non soddisfano questo requisito sono definite&nbsp;<strong>non deterministiche</strong>.</p>
+
+
+
+                <p>Esempi di funzioni non deterministiche:</p>
+
+
+
+                <ul id="block-09059f9bf73f4cee8006f44802a179e9" class="wp-block-list">
+                    <li>una funzione che non riceve parametri e da un risultato;</li>
+
+
+
+                    <li>una funzione che anche con gli stessi parametri restituisce risultati differenti in chiamate
+                        differenti;</li>
+
+
+
+                    <li>una funzione che non restituisce nulla.</li>
+                </ul>
+
+
+
+                <h3 class="wp-block-heading" id="block-59ee885e08f14d62976f4d4a4e8bc110"><strong>Funzione
+                        main()</strong></h3>
+
+
+
+                <p>La funzione main &egrave; una funzione speciale, in quanto &egrave; il punto di ingresso
+                    dell&rsquo;applicazione.</p>
+
+
+
+                <p>Essa riceve come parametro gli argomenti di avvio dell&rsquo;applicazione (che corrispondono agli
+                    argomenti passati all&rsquo;applicazione via linea di comando) e restituisce un numero intero, che
+                    corrisponde ad un codice, che pu&ograve; essere 0 se l&rsquo;applicazione termina correttamente,
+                    altrimenti un codice diverso da 0 per indicare l&rsquo;errore.</p>
+
+
+
+                <p>Il programma compilato quando viene lanciato dal sistema operativo esegue la funzione main, che
+                    (eventualmente) a sua volta esegue delle funzioni, che a loro volta possono eseguire altre funzioni.
+                </p>
+
+
+
+                <h3 class="wp-block-heading" id="block-d9bb3244349a44c99ca5db19f27f0e6b">Argomenti di default</h3>
+
+
+
+                <p>E&rsquo; possibile definire degli argomenti di &ldquo;default&rdquo; nella definizione di una
+                    funzione.</p>
+
+
+
+                <p>Ad esempio si prenda in considerazione la seguente funzione:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>void printChar(int count, char = &ldquo;*&rdquo;) {
+   for (int i=0; i&lt;=count; i++) {
+   cout &lt;&lt; char;
+}
+cout &lt;&lt; endl;
+}</code></pre>
+                </div>
+
+
+
+                <p>Come si vede il secondo argomento &egrave; valorizzato.</p>
+
+
+
+                <p>La funzione si pu&ograve; chiamare in due modi:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>printChar(5, &ldquo;#&rdquo;); -&gt; stampa 5 volte il carattere #</code></pre>
+                </div>
+
+            </div>
+            <div class="row"><a href="#home">Home</a></div>
+        </div>
+        <div id="manipolazione_di_stringhe" class="page">
+            <div class="row">
+                <h1 class="eckb-article-title">Manipolazione di stringhe</h1>
+                <strong>Stringhe</strong></h2>
+
+
+
+                <p>Le stringhe sono un&nbsp;<strong>tipo speciale di array</strong>.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>char hello[] = { &lsquo;h&rsquo;, &lsquo;e&rsquo;, &lsquo;l&rsquo;, &lsquo;l&rsquo;, &lsquo;o&rsquo;, &lsquo;\0&rsquo; }</code></pre>
+                </div>
+
+
+
+                <p>Crea una stringa di dimensione 6 (5 caratteri pi&ugrave; delimitazione). Notare il carattere di
+                    delimitazione (che corrisponde alla codifica 0 in ASCII). Questa notazione corrisponde alla seguente
+                    definizione:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>char hello[] = &ldquo;Hello&rdquo;;</code></pre>
+                </div>
+
+
+
+                <p>Nota bene: le espressioni definite da virgolette (ad esempio &ldquo;Hello&rdquo;) vengono chiamate
+                    &ldquo;<strong>literal</strong>&rdquo;.</p>
+
+
+
+                <p>Pur essendo possibile assegnargli un valore in fase di creazione, un char[] gode di tutte le
+                    caratteristiche degli array. Quindi:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>cout &lt;&lt; hello[2];  // stampa il 3&deg; carattere della stringa, cio&egrave; &lsquo;l&rsquo;</code></pre>
+                </div>
+
+
+
+                <p>Vediamo altri tipi di inizializzazione e assegnazione.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>char hello[50]; // crea una stringa di dimensione 50</code></pre>
+                </div>
+
+
+
+                <p>In questa istruzione &egrave; stato creato un char array ma non viene inizializzato.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>char myString[30] = {0}; // inizializza una stringa con il carattere 0</code></pre>
+                </div>
+
+
+
+                <p>In questa istruzione tutti i valori dell&rsquo;array vengono inizializzati ad un valore.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>char hello[10] = &lsquo;hello&rsquo;; // crea una stringa di dimensione definita e le assegna un valore</code></pre>
+                </div>
+
+
+
+                <p>A differenza della assegnazione senza dimensione (in quel caso &egrave; il compilatore C++ che auto
+                    inferisce la dimensione) &egrave; il programmatore che assegna una dimensione
+                    fissa.&nbsp;&nbsp;Quando si inizializza una stringa con un valore pi&ugrave; corta della dimensione
+                    definita i restanti caratteri vengono messi a 0.</p>
+
+
+
+                <p>Ovvero la stringa conterr&agrave;:</p>
+
+
+
+                <p>la stringa conterr&agrave;</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>{ &lsquo;h&rsquo;, &lsquo;e&rsquo;, &lsquo;l&rsquo;, &lsquo;l&rsquo;, &lsquo;o&rsquo;, &lsquo;\0&rsquo;, &lsquo;\0&rsquo;, &lsquo;\0&rsquo;, &lsquo;\0&rsquo;, &lsquo;\0&rsquo; }</code></pre>
+                </div>
+
+
+
+                <p>Le stringhe possono essere usate per input ed output come se fossero semplici variabili:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>cin &gt;&gt; hello;</code></pre>
+                </div>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>cout &lt;&lt; hello &lt;&lt; endl;</code></pre>
+                </div>
+
+
+
+                <p>L&rsquo;inserimento tramite cin ha l&rsquo;inconveniente di terminare la stringa appena
+                    l&rsquo;utente inserisce uno spazio. Se si vuole inserire una intera linea compresa di spazi si
+                    usa&nbsp;<strong>cin.getline</strong>:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int size = 100;</code></pre>
+                </div>
+
+
+
+                <p>char hello[size];</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp"
+                        data-lang="C++"><code>cin.getline(hello, size);</code></pre>
+                </div>
+
+
+
+                <p>dove&nbsp;<em>size</em>&nbsp;&egrave; la dimensione massima di caratteri inseribili (inferiore o
+                    uguale alla dimensione della stringa).</p>
+
+
+
+                <h3 class="wp-block-heading"><strong>Cosa non si pu&ograve; fare con le stringhe?</strong></h3>
+
+
+
+                <p>Non &egrave; possibile assegnare una stringa dopo averla inizializzata:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>char hello[10];
+hello = &ldquo;ciao&rdquo;; // qui il compilatore da errore</code></pre>
+                </div>
+
+
+
+                <p>Per assegnare valori ad una stringa (dopo la sua inizializzazione) si usa la libreria string.h,
+                    descritta sotto.</p>
+
+
+
+                <p>Non &egrave; nemmeno possibile eseguire la seguente istruzione:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>char hello[]; // errore!</code></pre>
+                </div>
+
+
+
+                <p>Questo perch&eacute;, come visto sopra, se non assegnamo un valore il compilatore non pu&ograve;
+                    inferire la dimensione dell&rsquo;array.</p>
+
+
+
+                <p>E&rsquo; tecnicamente possibile creare variabili stringa dinamiche in C++, ma &egrave; richiesto
+                    l&rsquo;utilizzo dei puntatori, argomento che va oltre la presente trattazione.</p>
+
+
+
+                <h3 class="wp-block-heading"><strong>Libreria string.h</strong></h3>
+
+
+
+                <p>Le stringhe possono essere manipolate mediante speciali funzioni presenti nella
+                    libreria&nbsp;<strong>&lt;string.h&gt;</strong></p>
+
+
+
+                <figure class="wp-block-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><strong>Funzione</strong></td>
+                                <td><strong>Utilizzo</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>strcpy(s1, s2);</strong></td>
+                                <td>Copia s2 in s1: s2 pu&ograve; essere un literal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>strcat(s1, s2);</strong></td>
+                                <td>Concatena s2 alla fine di s1: s2 pu&ograve; essere un literal</td>
+                            </tr>
+                            <tr>
+                                <td><strong>strlen(s1);</strong></td>
+                                <td>Lunghezza di s1. La lunghezza si intende al carattere di terminazione.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>strcmp(s1, s2);</strong></td>
+                                <td>Compara s1 con s2 (0 se identiche, &gt; 0 se se s1 &egrave; alfabeticamente
+                                    successiva, &lt; 0 altrimenti). Possono una o entrambe dei literal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>atoi(s1)</strong></td>
+                                <td>Converte la stringa in intero. Pu&ograve; essere un literal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>atof(s1)</strong></td>
+                                <td>Converte la stringa in double. Pu&ograve; essere un literal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>sprintf(s1, &ldquo;%d&rdquo;, n)</strong></td>
+                                <td>Converte il numero n in stringa copiando il valore su s1. Nota s1 deve avere un
+                                    sufficiente numero di caratteri per contenere il numero.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+
+
+                <h2 class="wp-block-heading"><strong>STRTOK</strong></h2>
+
+
+
+                <p><strong>strtok</strong>&nbsp;&egrave; una funzione che estrae elementi di tipo stringa (detti
+                    &ldquo;<strong>token&rdquo;</strong>) da una stringa, a partire da un carattere separatore.&nbsp;
+                </p>
+
+
+
+                <p>Esempio 1: dalla stringa&nbsp;<em>&ldquo;salve mondo&rdquo;</em>&nbsp;se eseguo&nbsp;strtok(stringa,
+                    &rdquo; &ldquo;)&nbsp;otterr&ograve; il token &ldquo;salve&rdquo;, in quanto la funzione estrae
+                    tutti caratteri da quella stringa fino al separatore (escluso).</p>
+
+
+
+                <p>Esempio 2: dalla stringa &ldquo;Mario,Sandra,Franco,Luisa&rdquo; se eseguo la
+                    funzione&nbsp;strtok(stringa, &ldquo;,&rdquo;)otterr&ograve; il token &ldquo;Mario&rdquo;.</p>
+
+
+
+                <p>L&rsquo;obiettivo di Strtok &egrave; quello di permettere al programma di estrarre parole da una
+                    frase (esempio 1), o elementi da un elenco separato da virgole (esempio 2), o interpretare comandi
+                    veri e propri (&ldquo;3 + 5&rdquo;).</p>
+
+
+
+                <p>Strtok non si limita ovviamente ad estrarre il primo token dalla lista, ma estrae anche i successivi.
+                    Se richiamato con primo argomento NULL continua ad estrarre token dalla stringa precedentemente
+                    usata, perch&egrave; &ldquo;si ricorda&rdquo; il punto a cui era arrivato.</p>
+
+
+
+                <p>Vediamo un esempio pratico.</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-cpp" data-lang="C++"><code>#include &lt;iostream&gt;
+#include &lt;string.h&gt;&nbsp;
+using namespace std;
+int main()
+{
+  char line[80];
+  cout &lt;&lt; &quot;Inserisci una riga: &quot;;
+  cin.getline(line, 80); // viene inserita la riga&nbsp;
+  char *token; // il token viene definito come un puntatore a un array di caratteri
+  token =&nbsp;strtok(line, &ldquo; &ldquo;);&nbsp;// prima esecuzione
+  while (token !=&nbsp;NULL) { // se non nullo si ripete
+    cout &lt;&lt; token &lt;&lt; endl;&nbsp;
+    token =&nbsp;strtok(NULL, &ldquo; &ldquo;);&nbsp;// esecuzioni successive
+  }
+  return 0;
+}</code></pre>
+                </div>
+
+
+
+                <p>Come si vede:</p>
+
+
+
+                <ul class="wp-block-list">
+                    <li>&Egrave; necessario definire la variabile token come puntatore ad array.</li>
+
+
+
+                    <li>All&rsquo;estrazione del primo valore si usa strtok passandogli il nome della stringa da cui
+                        estrarre (SOLO la prima volta)</li>
+
+
+
+                    <li>Negli utilizzi successivi, si usa strtok passandogli il valore NULL. Strtok continua ad usare la
+                        stringa precedente, ed estrae ad ogni chiamata il token successivo.</li>
+                </ul>
+
+
+
+                <p>Output:</p>
+
+
+
+                <div class="hcb_wrap">
+                    <pre class="prism line-numbers lang-bash" data-lang="Bash"><code>Inserisci una riga: hello world
+hello
+world</code></pre>
+                </div>
+
+
+
+                <pre class="wp-block-code"><code></code></pre>
+            </div>
+            <div class="row"><a href="#home">Home</a></div>
+        </div>
+    </div>
+    <script type="module" src="./script.js"></script>
 
 </body>
 
