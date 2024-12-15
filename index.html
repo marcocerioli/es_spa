@@ -15,21 +15,281 @@
    <div id="container" class="container">
       <div id="home" class="page">
           <div class="row">Questo è il contenuto della home page</div>
-          <div class="row"><a href="#pagina1">Questo è un link a pagina 1</a></div>
+          <div class="row"><a href="#puntatori">Puntatori</a></div>
           <div class="row"><a href="#pagina2">Questo è un link a pagina 2</a></div>
           <div class="row"><a href="#pagina3">Questo è un link a pagina 3</a></div>                  
       </div>
-      <div id="pagina1" class="page">
-         <div class="row">Questo è il contenuto di pagina 1</div>
-         <div class="row"><a href="#home">Questo è un link a pagina 1</a></div>              
+      <div id="puntatori" class="page">
+         <div class="row">
+            <h1 class="eckb-article-title">Puntatori</h1>
+            <strong>Il processo in esecuzione</strong></h2>
+
+            <p>Come abbiamo gi&agrave; visto, quando viene compilata una applicazione questa viene convertita in un pacchetto che contiene direttamente il codice macchina che pu&ograve; essere direttamente eseguito dalla CPU del computer. Questo prodotto &egrave; l&rsquo;<strong>applicazione eseguibile</strong>.</p>
+
+
+
+            <p>Quando diamo il comando di esecuzione ad una applicazione eseguibile, il sistema operativo predispone uno spazio di memoria all&rsquo;esecuzione dell&rsquo;applicazione, in cui carica il codice macchina e lo dedica all&rsquo;applicazione.</p>
+            
+            
+            
+            <p>La memoria di una applicazione &egrave; come un grande array, organizzato in celle dove ogni cella occupa un byte di memoria (<sup data-fn="fb42f781-bf89-464a-ac6d-81bcf7f8a012" class="fn"><a href="#fb42f781-bf89-464a-ac6d-81bcf7f8a012" id="fb42f781-bf89-464a-ac6d-81bcf7f8a012-link">1</a></sup>), ed ogni cella &egrave; contraddistinta da un indirizzo.</p>
+            
+            
+            
+            <p>L&rsquo;applicazione in esecuzione insieme alla sua memoria dedicata costituiscono un&nbsp;<strong>processo.</strong></p>
+            
+            
+            
+            <p><strong>Codice e spazio dedicato ai dati sono condivisi nella stessa area di memoria</strong>, come previsto dall&rsquo;<span class="glossaryLink"  aria-describedby="tt"  data-cmtooltip="&lt;div class=glossaryItemTitle&gt;Architettura&lt;/div&gt;&lt;div class=glossaryItemBody&gt;&amp;lt;!-- wp:paragraph --&amp;gt;L&amp;#039;architettura di un sistema informatico indica il modo in cui &egrave; organizzato il software, di quali componenti e moduli &egrave; composto, che ruolo hanno e in che modo comunicano.&amp;lt;br/&amp;gt;&amp;lt;!-- /wp:paragraph --&amp;gt;&lt;/div&gt;"  data-gt-translate-attributes='[{"attribute":"data-cmtooltip", "format":"html"}]'  tabindex='0' role='link'>architettura</span> di Von Neumann. Quando quindi creiamo una variabile l&rsquo;applicazione (tramite il sistema operativo) trova una locazione di memoria grande abbastanza per contenerla (si ricorda che le variabili occupano pi&ugrave; o meno bytes in base al loro tipo) e associa a questo spazio di memoria un <strong>simbolo</strong>, ovvero il nome della variabile. Ad esempio se vogliamo creare una variabile di tipo int in memoria, quando la inizializziamo il sistema operativo alloca da qualche parte in memoria uno spazio di tot bytes per memorizzarne il valore (nei sistemi a 64 bit sono 8 bytes). Viene quindi aggiornata una tabella di simboli che associa ad ogni simbolo la posizione di memoria del dato ad esso associato.</p>
+            
+            
+            
+            <p>La parte della memoria dedicata ai dati memorizzati come variabili viene chiamata &ldquo;<strong>heap</strong>&rdquo;. Nello heap le variabili vengono create assegnando loro un indirizzo che contiene il primo byte della variabile.</p>
+            
+            
+            
+            <p>Esiste poi una porzione speciale della memoria, detta <strong>stack</strong>, che viene utilizzata dai dati usati dalle funzioni, come vedremo pi&ugrave; avanti.</p>
+            
+            
+            
+            <p>Qui lo schema di memoria di un processo.</p>
+            
+            
+            
+            <figure class="wp-block-image" id="block-d515e996fcfe420b8a23449742809312"><img decoding="async" src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-54c12d55-229f-4c83-b4b6-dd7d262e4443-ebe3bf22-848a-4b45-9a54-4c0c2db22a70-untitledpng/public" alt="notion image"/></figure>
+            
+            
+            
+            <h3 class="wp-block-heading" id="block-626df81c1abe4300a11f79379c702c28"><strong>Puntatori e riferimenti in C/C++</strong></h3>
+            
+            
+            
+            <p>Come abbiamo appena visto le variabili occupano uno spazio di memoria, determinato da un indirizzo e in C/C++ le memorizziamo in variabili. Ad esempio l&rsquo;istruzione:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int x = 4;</code></pre></div>
+            
+            
+            
+            <p>memorizza in una struttura dati il valore 4 e l&rsquo;associa al simbolo &ldquo;x&rdquo;, e memorizza nella tabella dei simboli l&rsquo;associazione tra x e l&rsquo;indirizzo dove si trova il valore di x. </p>
+            
+            
+            
+            <p>Quando assegnamo un valore ad x, ad esempio con:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>x = 25</code></pre></div>
+            
+            
+            
+            <p>quello che fa l&rsquo;applicazione &egrave; di andare a memorizzare il valore 25 nell&rsquo;indirizzo di memoria indicato da x.</p>
+            
+            
+            
+            <p>Col C/C++ &egrave; possibile accedere direttamente agli indirizzi di memoria delle variabili, tramite l&rsquo;accesso <strong>per riferimento</strong> i tipi <strong>puntatore</strong>. Vediamo come.</p>
+            
+            
+            
+            <h4 class="wp-block-heading" id="block-24c071692d46481abb2c0d8f5453be28">Riferimento</h4>
+            
+            
+            
+            <p>Viene definito con il simbolo&nbsp;<strong>&amp;</strong>&nbsp;(chiamato &ldquo;ampersand&rdquo;)&nbsp;<strong>l&rsquo;operatore unario di referenziazione</strong>, detto anche&nbsp;<strong>riferimento</strong>. Questo operatore applicato ad una variabile di qualsiasi tipo restituisce l&rsquo;indirizzo di memoria della variabile stessa. Ad esempio se definiamo:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415; 
+            cout &lt;&lt; &amp;x; </code></pre></div>
+            
+            
+            
+            <p>con l&rsquo;espressione<strong>&nbsp;<code>&amp;x</code></strong><code>&nbsp;</code>otteniamo l&rsquo;indirizzo di memoria dove viene memorizzata x.</p>
+            
+            
+            
+            <p>Ipotizziamo per esempio che l&rsquo;indirizzo di x (ovvero &amp;x) si trovi all&rsquo;indirizzo 0x108 (il prefisso 0x indica che l&rsquo;indirizzo &egrave; espresso in notazione esadecimale). Allora le espressioni x e &amp;x valgono rispettivamente:</p>
+            
+            
+            
+            <figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>Espressione</strong></td><td><strong>valore</strong></td></tr><tr><td>x</td><td>3.1415</td></tr><tr><td>&amp;x</td><td>0x108</td></tr></tbody></table></figure>
+            
+            
+            
+            <h4 class="wp-block-heading" id="block-9f8254cfb8774dddb8ff4f7c164218fb"><strong>Puntatore</strong></h4>
+            
+            
+            
+            <p>Possiamo memorizzare l&rsquo;indirizzo di memoria dove si trova una variabile in una variabile. che memorizza quindi non il valore della variabile ma  appunto l&rsquo;indirizzo di memoria dove essa si trova. Ma questo non &egrave; sufficiente per identificare la variabile. Infatti &egrave; necessario sapere anche cosa c&rsquo;&egrave; in quell&rsquo;indirizzo. Questo perch&eacute; l&rsquo;indirizzo di memoria ci dice solo la posizione dove si trova quella variabile, ma non ci da alcuna informazione sul tipo di variabile.</p>
+            
+            
+            
+            <p>Il tipo di variabile che memorizza un indirizzo deve quindi indicare sia che &egrave; un indirizzo, sia cosa c&rsquo;&egrave; a quell&rsquo;indirizzo. Questo nuovo tipo di dato si chiama <strong>puntatore</strong>. </p>
+            
+            
+            
+            <p>Riprendiamo l&rsquo;esempio precedente:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415;
+            cout &lt;&lt; &amp;x;
+            float* pointer = &amp;x;</code></pre></div>
+            
+            
+            
+            <p>L&rsquo;istruzione float* pointer = &amp;x va quindi a definire un nuovo tipo di dato che va ad indicare che si tratta di un puntatore, e che a quell&rsquo;indirizzo si trova una variabile di tipo float.</p>
+            
+            
+            
+            <p>Ovvero la variabile <strong>puntatore</strong> &egrave; definita come un <strong>puntatore a float</strong> (float*) e ha come valore <strong>l&rsquo;indirizzo di x</strong>.</p>
+            
+            
+            
+            <p>Quindi le espressioni precedenti valgono:</p>
+            
+            
+            
+            <figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>Espressione</strong></td><td><strong>valore</strong></td><td><strong>tipo</strong></td></tr><tr><td>x</td><td>3.1415</td><td>float</td></tr><tr><td>&amp;x</td><td>0x108</td><td>(indirizzo puro)</td></tr><tr><td>pointer</td><td>0x108</td><td>float*</td></tr></tbody></table></figure>
+            
+            
+            
+            <p>Il simbolo *&nbsp;(chiamato &ldquo;star&rdquo;)&nbsp;<strong>l&rsquo;operatore unario di dereferenziazione</strong>, che serve a gestire le  <strong>variabili</strong>&nbsp;<strong>puntatore</strong>, che contengono l&rsquo;indirizzo di memoria di una variabile. Queste variabili sono dichiarate quindi aggiungendo il simbolo * al tipo di dato a cui puntano.</p>
+            
+            
+            
+            <p>Un indirizzo pu&ograve; anche essere vuoto, in questo caso non memorizza alcun indirizzo, ma questo pu&ograve; essere assegnato in un secondo momento:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int* pointer = NULL;</code></pre></div>
+            
+            
+            
+            <h3 class="wp-block-heading">Uso dei puntatori nelle espressioni</h3>
+            
+            
+            
+            <p>Quando usiamo la variabile puntatore bisogna fare attenzione perch&eacute; quando la usiamo in una espressione andiamo ad indicare il valore della variabile a cui punta. Quindi</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>float x = 3.1415;
+            cout &lt;&lt; &amp;x;
+            float* pointer = &amp;x;
+            cout &lt;&lt; pointer &lt;&lt; endl; // stampa l'indirizzo
+            cout &lt;&lt; *pointer &lt;&lt; endl; // stampa il valore della variabile a cui punta pointer</code></pre></div>
+            
+            
+            
+            <p>*pointer indica quindi il &ldquo;valore puntato&rdquo; quando si trova in una espressione.</p>
+            
+            
+            
+            <p>Quindi l&rsquo;operatore star * ha due comportamenti diversi a seconda del contesto in cui &egrave; utilizzato:</p>
+            
+            
+            
+            <ul class="wp-block-list">
+            <li>quando &egrave; a sinistra dell&rsquo;uguale (in una dichiarazione, quindi a sinistra dell&rsquo;uguale) indica un puntatore ad uno specifico tipo di dato (<strong>&ldquo;puntatore a&hellip;&rdquo;</strong>); </li>
+            
+            
+            
+            <li>quando &egrave; usato in una espressione (a destra dell&rsquo;uguale, o come espressione da calcolare, stampare o inviare ad una funzione) viene usato per indicare il valore a cui punta (<strong>&ldquo;valore puntato da&rdquo;</strong>).</li>
+            </ul>
+            
+            
+            
+            <p>Quando sono usati quindi come espressioni il <strong>riferimento (&amp;)</strong> ed il <strong>puntatore (*)</strong> sono quindi due operatori&nbsp;<strong>complementari</strong> <strong>tra loro</strong>. &ugrave;</p>
+            
+            
+            
+            <p>Il primo (&amp;) restituisce l&rsquo;indirizzo della variabile.</p>
+            
+            
+            
+            <p>il secondo (*) da il valore puntato dalla variabile.</p>
+            
+            
+            
+            <p>Vediamo ad esempio questo codice:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int a = 6;
+            int *x = &amp;a; // il cui valore sar&agrave; l'indirizzo di a
+            int b = 5;
+            int *y = &amp;b; // il cui valore sar&agrave; l'indirizzo di b
+            int somma = *y + *x; // la somma far&agrave; 11 
+            int *psomma = &amp;somma; // il cui valore &egrave; l'indirizzo di memoria dove si trova la somma</code></pre></div>
+            
+            
+            
+            <p>Questo &egrave; un esempio di memoria risultante.</p>
+            
+            
+            
+            <figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td class="has-text-align-left" data-align="left">0x106</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x105</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x104</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x103</td><td></td></tr><tr><td class="has-text-align-left" data-align="left">0x102 (psomma, cio&egrave; &amp;somma)</td><td>11</td></tr><tr><td class="has-text-align-left" data-align="left">0x101 (y, cio&egrave; &amp;b)</td><td>5</td></tr><tr><td class="has-text-align-left" data-align="left">0x100 (x, cio&egrave; &amp;a)</td><td>6</td></tr></tbody></table></figure>
+            
+            
+            
+            <p>I puntatori sono variabili numeriche, quindi &egrave; possibile usarli per accedere ad indirizzi di memoria. A dall&rsquo;esempio precedente:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int* c = *(x+1); // indica l'indirizzo successivo a x, nell'esempio 0x101</code></pre></div>
+            
+            
+            
+            <p>Coi puntatori si ha quindi un accesso diretto alla memoria del processo, e si pu&ograve; quindi accedere ad ogni elemento della memoria, compreso lo stack e il codice. <em>Non esiste alcun controllo e quindi &egrave; responsabilit&agrave; del programmatore scrivere un programma che non modifichi se stesso (a meno che, ovviamente non lo voglia e sappia cosa sta facendo!).</em></p>
+            
+            
+            
+            <h2 class="wp-block-heading">Array e puntatori</h2>
+            
+            
+            
+            <p>Gli array sono dei puntatori. In altri termini. Sia dato il seguente array:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>int x[3] = {10,20,30};</code></pre></div>
+            
+            
+            
+            <p>allora x &egrave; un puntatore ad intero (&egrave; di tipo <code>int*</code>) . In altri termini:</p>
+            
+            
+            
+            <div class="hcb_wrap"><pre class="prism line-numbers lang-cpp" data-lang="C++"><code>cout &lt;&lt; *x; // stampa x[0] ovvero 10
+            cout &lt;&lt; *(x+1); // stampa x[1] cio&egrave; 20</code></pre></div>
+            
+            
+            
+            <p>Peranto l&rsquo;espressione x[i] &egrave; del tutto equivalente a *(x+i).</p>
+            
+            
+            
+            <p><em>Ancora una volta si ricorda che non esiste controllo sugli indici di un array e quindi &egrave; possibile leggere e scrivere fuori dai limiti di un array.</em></p>
+            
+            
+            
+            <p>Il C/C++ &egrave; un linguaggio che offre pieno e totale controllo della memoria. </p>
+            </div>
+         <div class="row"><a href="#home">Home</a></div>              
       </div>
       <div id="pagina2" class="page">
-         <div class="row">Questo è il contenuto di pagina 2</div>         
-         <div class="row"><a href="#home">Questo è un link a pagina 1</a></div>                  
+         <div class="row">
+
+         </div>         
+         <div class="row"><a href="#home">Home</a></div>                  
       </div>
       <div id="pagina3" class="page">            
-         <div class="row">Questo è il contenuto di pagina 3</div>
-         <div class="row"><a href="#home">Questo è un link a pagina 1</a></div>
+         <div class="row">
+            
+         </div>
+         <div class="row"><a href="#home">Home</a></div>
       </div>
    </div>
    <script type="module" src="./script.js"></script>
